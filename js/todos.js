@@ -7,12 +7,9 @@ $(function() {
   Parse.$ = jQuery;
 
   // Initialize Parse with your Parse application javascript keys
- // Parse.initialize("your-application-id",
-    //               "your-javascript-key");
+  Parse.initialize("your-application-id",
+                   "your-javascript-key");
 
- // Initialize Parse with your Parse application javascript keys
-     Parse.initialize("l1vS0vViCTmKHBuPZ0agUL78l31vu5BoHUQAMiWO",
-        "1hV11SctEPYiQQlHUkTAq6rFYCrowczTjs8Lq8A4");
   // Todo Model
   // ----------
 
@@ -321,7 +318,7 @@ $(function() {
         },
 
         error: function(user, error) {
-          self.$(".login-form .error").html("用户名或密码不正确，请重新输入！").show();
+          self.$(".login-form .error").html("Invalid username or password. Please try again.").show();
           self.$(".login-form button").removeAttr("disabled");
         }
       });
