@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>Parse JavaScript Todo App</title>
+    <title>爱拷贝 - Android手机必备神器</title>
     <link href="css/todos.css" media="all" rel="stylesheet" type="text/css"/>
     <script src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
     <script src="js/underscore.js"></script>
@@ -13,12 +13,11 @@
   <body>
 
     <!-- Todo App Interface -->
+    <div class="nav">
+      <h1><a href="#"><img src="images/ico.png" alt="爱拷贝"></a></h1>
+    </div>
 
     <div id="todoapp">
-      <div class="title">
-        <h1>Parse Todos</h1>
-      </div>
-
       <div class="content">
       </div>
     </div>
@@ -31,23 +30,27 @@
     <!-- Templates -->
 
     <script type="text/template" id="login-template">
-      <header id="header"></header>
+      
       <div class="login">
         <form class="login-form">
-          <h2>Log In</h2>
+          <h2>登 陆</h2>
           <div class="error" style="display:none"></div>
-          <input type="text" id="login-username" placeholder="Username" />
-          <input type="password" id="login-password" placeholder="Password" />
-          <button>Log In</button>
+          <input type="text" id="login-username" placeholder="用户名" />
+          <input type="password" id="login-password" placeholder="密码" />
+          <button>登 陆</button>
         </form>
 
         <form class="signup-form">
-          <h2>Sign Up</h2>
+          <h2>注 册</h2>
           <div class="error" style="display:none"></div>
-          <input type="text" id="signup-username" placeholder="Username" />
-          <input type="password" id="signup-password" placeholder="Create a Password" />
-          <button>Sign Up</button>
+          <input type="text" id="signup-username" placeholder="用户名" />
+          <input type="password" id="signup-password" placeholder="创建新密码" />
+          <button>注 册</button>
         </form>
+      </div>
+      <div class="adv">
+        <div class="erweima"><img src="images/123.jpg" alt=""></div>
+        <p class="adv_txet">无论您是在刷微博，看朋友圈，逛人人网，浏览普通的网页等，当您看到您喜欢的信息，您只需要复制它，爱拷贝就会自动把它保存起来并且同步到云端，保证数据永不丢失。</p>
       </div>
     </script>
 
