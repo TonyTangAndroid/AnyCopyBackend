@@ -12,7 +12,6 @@ $(function() {
 
   // Todo Model
   // ----------
-
   // Our basic Todo model has `content`, `order`, and `done` attributes.
   var Todo = Parse.Object.extend("Todo", {
     // Default attributes for the todo.
@@ -150,7 +149,7 @@ $(function() {
 
     // Delegated events for creating new items, and clearing completed ones.
     events: {
-      "keypress #new-todo":  "createOnEnter",
+      "click .save_cont":  "createOnEnter",
       "click #clear-completed": "clearCompleted",
       "click #toggle-all": "toggleAllComplete",
       "click .log-out": "logOut",
@@ -266,10 +265,10 @@ $(function() {
     // If you hit return in the main input field, create new Todo model
     createOnEnter: function(e) {
       var self = this;
-      if (e.keyCode != 13) return;
-
+      /*if (e.keyCode != 13) return;*/
       this.todos.create({
         content: this.input.val(),
+        title: "hhh",
         order:   this.todos.nextOrder(),
         done:    false,
         user:    Parse.User.current(),
