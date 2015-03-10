@@ -84,7 +84,8 @@ body {
 }
 
 .section {
-    position: relative;
+    float: left;
+    width:35%;
 }
 
 
@@ -115,46 +116,29 @@ body {
     font-smoothing: antialiased;
 }
 
-#new-todo {
-    padding: 16px 16px 16px 60px;
-    border: none;
-    background: rgba(0, 0, 0, 0.02);
-    z-index: 2;
-    box-shadow: none;
-}
-
 #main {
     position: relative;
     z-index: 2;
     border-top: 1px dotted #adadad;
+    margin-bottom:50px;
+    border-bottom:1px solid #999;
 }
 
-label[for='toggle-all'] {
-    display: none;
-}
 
-#toggle-all {
+#toggle-all,label[for='toggle-all'] {
     position: absolute;
-    top: -56px;
-    left: -15px;
-    width: 65px;
-    height: 41px;
+    top: -43px;
+    left: 13px;
     text-align: center;
     border: none; /* Mobile Safari */
     -webkit-appearance: none;
     -ms-appearance: none;
     -o-appearance: none;
     appearance: none;
-    -webkit-transform: rotate(90deg);
-    -ms-transform: rotate(90deg);
-    transform: rotate(90deg);
 }
-
-#toggle-all:before {
-    content: '»';
-    font-size: 28px;
-    color: #d9d9d9;
-    padding: 0 25px 7px;
+label[for='toggle-all'] {
+    left:36px;
+    top:-46px;
 }
 
 #toggle-all:checked:before {
@@ -292,29 +276,10 @@ label[for='toggle-all'] {
 }
 
 #footer {
+    width:100%;
     color: #777;
-    padding: 0 15px;
-    position: absolute;
-    right: 0;
-    bottom: -31px;
-    left: 0;
     z-index: 1;
     text-align: center;
-}
-
-#footer:before {
-    content: '';
-    position: absolute;
-    right: 0;
-    bottom: 31px;
-    left: 0;
-    height: 100px;
-    z-index: -1;
-    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.3),
-    0 6px 0 -3px rgba(255, 255, 255, 0.8),
-    0 7px 1px -3px rgba(0, 0, 0, 0.3),
-    0 42px 0 -6px rgba(255, 255, 255, 0.8),
-    0 43px 2px -6px rgba(0, 0, 0, 0.2);
 }
 
 #todo-count {
@@ -324,11 +289,9 @@ label[for='toggle-all'] {
 
 #filters {
     margin: 0;
-    padding: 0;
+    padding-left:45px;
     list-style: none;
-    position: absolute;
-    right: 0;
-    left: 0;
+    float: left;
 }
 
 #filters li {
@@ -351,8 +314,6 @@ label[for='toggle-all'] {
     text-decoration: none;
     background: rgba(0, 0, 0, 0.1);
     font-size: 11px;
-    padding: 0 10px;
-    position: relative;
     border-radius: 3px;
     box-shadow: 0 -1px 0 0 rgba(0, 0, 0, 0.2);
 }
@@ -386,16 +347,18 @@ label[for='toggle-all'] {
 }
 
 
-#todoapp .content{height: 600px;
-    padding: 0 300px;}
+#todoapp .content{
+    height: 600px;
+    padding: 0 100px;}
 #todoapp .content .login {
     width: 350px;
-    margin-top:45px;
+    margin:45px 0 0 200px;
     float: left;
 }
 #todoapp .content .adv{
-    margin-top:45px;
-    width:50%;
+    margin-top:25px;
+    margin-right:80px;
+    width:400px;
     height: 500px;
     float: right;
     text-align: center;
@@ -477,7 +440,50 @@ label[for='toggle-all'] {
 .nav h1{
     padding: 25px 0 0 255px;
 }
-
+#header {
+    margin:20px 0;
+    padding-left:325px;
+}
+#header .add_cont{
+    width:80px;
+    height: 30px;
+    background-color:#3790ce;
+    border-radius:5px;
+    color: #fff;
+}
+#todoapp .content .write{
+    width:735px;
+    height:1000px;
+    float: right;
+    border-left: 3px solid #ccc;
+}
+#todoapp .content .write .title{
+    display:block;
+    width:100%;
+    box-sizing: border-box;
+    height:50px;
+    margin:20px 0 0 30px;
+    font-size:24px;
+    text-indent: 1em;
+    color:#000;
+}
+#todoapp .content .write .save_cont{
+    width:60px;
+    height: 30px;
+    background-color:#3790ce;
+    border-radius:5px;
+    color: #fff;
+    margin:20px 0 0 30px;
+}
+#todoapp .content .write .write_cont{
+    width:100%;
+    height:800px;
+    box-sizing:border-box;
+    margin:25px 0 0 30px;
+    padding:10px;
+    font-size: 20px;
+    text-indent: 2em;
+}
 
 
 
