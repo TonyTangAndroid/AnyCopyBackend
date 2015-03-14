@@ -102,7 +102,7 @@ $(function() {
       this.model.bind('destroy', this.remove);
     },
 
-    // Re-render the contents of the todo item.
+    // Re-render the content of the todo item.
     render: function() {
       $(this.el).html(this.template(this.model.toJSON()));
       this.input = this.$('.edit');
@@ -170,6 +170,7 @@ $(function() {
       this.$el.html(_.template($("#manage-todos-template").html()));
       
       this.input = this.$("#new-todo");
+        this.contentTwo = this.$("#new-con");
       this.allCheckbox = this.$("#toggle-all")[0];
 
       // Create our collection of Todos
@@ -211,7 +212,7 @@ $(function() {
 
       this.delegateEvents();
 
-      this.allCheckbox.checked = !remaining;
+      /*this.allCheckbox.checked = !remaining;*/
     },
 
     // Filters the list based on which type of filter is selected
@@ -264,11 +265,12 @@ $(function() {
 
     // If you hit return in the main input field, create new Todo model
     createOnEnter: function(e) {
-      var self = this;
+
+        var self = this;
       /*if (e.keyCode != 13) return;*/
       this.todos.create({
         content: this.input.val(),
-        title: "sssssssssssssss",
+        title: this.contentTwo.val(),
         order:   this.todos.nextOrder(),
         done:    false,
         user:    Parse.User.current(),
@@ -276,6 +278,7 @@ $(function() {
       });
 
       this.input.val('');
+        this.contentTwo.val("");
       this.resetFilters();
     },
 
