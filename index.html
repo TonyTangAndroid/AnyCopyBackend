@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>爱拷贝 - Android手机必备神器</title>
+    <title>AnyCopy: What you copy is what you save</title>
     <link href="css/todos.css" media="all" rel="stylesheet" type="text/css"/>
     <script src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
     <script src="js/underscore.js"></script>
@@ -14,7 +14,7 @@
 
     <!-- Todo App Interface -->
     <div class="nav">
-      <h1><a href="#"><img src="images/ico.png" alt="爱拷贝"></a></h1>
+      <h1><a href="#"><img src="images/ico.png" alt="AnyCopy"></a></h1>
     </div>
 
     <div id="todoapp">
@@ -27,42 +27,42 @@
 
         <div class="login">
         <form class="login-form">
-          <h2>登 陆</h2>
+          <h2>Login</h2>
           <div class="error" style="display:none"></div>
-          <input type="text" id="login-username" placeholder="用户名" />
-          <input type="password" id="login-password" placeholder="密码" />
-          <button>登 陆</button>
+          <input type="text" id="login-username" placeholder="User name:" />
+          <input type="password" id="login-password" placeholder="Password:" />
+          <button>Login</button>
         </form>
 
         <form class="signup-form">
-          <h2>注 册</h2>
+          <h2>Sign Up</h2>
           <div class="error" style="display:none"></div>
-          <input type="text" id="signup-username" placeholder="用户名" />
-          <input type="password" id="signup-password" placeholder="创建新密码" />
-          <button>注 册</button>
+          <input type="text" id="signup-username" placeholder="User name:" />
+          <input type="password" id="signup-password" placeholder="Password:" />
+          <button>Sign Up</button>
         </form>
       </div>
       <div class="adv">
         <div class="erweima"><img src="images/123.jpg" alt=""></div>
-        <p class="adv_txet">无论您是在刷微博，看朋友圈，逛人人网，浏览普通的网页等，当您看到您喜欢的信息，您只需要复制它，爱拷贝就会自动把它保存起来并且同步到云端，保证数据永不丢失。</p>
+        <p class="adv_txet">No matter which app you are using, for example, Facebook, Twitter, Google+ or even surfing on the Internet on your device, whenever you meet some information that matters to you, all you have to do is to copy it and it will be saved to AnyCopy and synced to Cloud automatically. You will never ever miss anything that matters to you.</p>
       </div>
     </script>
 
     <script type="text/template" id="manage-todos-template">
       <div id="user-info">
-        用户名： <%= Parse.User.current().escape("username") %> (<a href="javascript:;" class="log-out">注销</a>)
+        User name： <%= Parse.User.current().escape("username") %> (<a href="javascript:;" class="log-out">Log Off</a>)
       </div>
 
       <div class="section">
 
         <header id="header">
 
-          <button class="add_cont">新建笔记</button>
+          <button class="add_cont">New Note</button>
         </header>
 
         <div id="main">
           <input id="toggle-all" type="checkbox">
-          <label for="toggle-all">全选</label>
+          <label for="toggle-all">Select All</label>
           <ul id="todo-list">
             <img src='images/spinner.gif' class='spinner' />
           </ul>
@@ -71,16 +71,16 @@
         <div id="todo-stats"></div>
       </div>
       <div class="write">
-        <button class="save_cont">保存</button>
+        <button class="save_cont">Save</button>
           <input type="text" class="title" id="new-todo"/>
-        <textarea class="write_cont""></textarea>
+        <textarea class="write_cont"></textarea>
       </div>
     </script>
 
     <script type="text/template" id="item-template">
       <li class="<%= done ? 'completed' : '' %>">
 	<div class="view">
-	  <input class="toggle" type="checkbox" <%= done ? 'checked="checked"' : '' %>>
+	  <input class="toggle" type="checkbox" <%= done ? 'checked="checked"' : '' %> />
 	  <label class="todo-content"><%= _.escape(content) %></label>
 	  <button class="todo-destroy"></button>
 	</div>
@@ -90,19 +90,19 @@
 
     <script type="text/template" id="stats-template">
       <footer id="footer">
-	<span id="todo-count"><strong><%= remaining %></strong> <%= remaining == 1 ? '项' : '项' %> 剩余</span>
+	<span id="todo-count"><strong><%= remaining %></strong> <%= remaining == 1 ? 'note' : 'notes' %> created</span>
 	<ul id="filters">
 	  <li>
-	    <a href="javascript:void(0)" id="all" class="selected">主界面</a>
+	    <a href="javascript:void(0)" id="all" class="selected">Home</a>
 	  </li>
 	  <li>
-	    <a href="javascript:void(0)" id="active">删除所选项</a>
+	    <a href="javascript:void(0)" id="active">Delete selected notes</a>
 	  </li>
 	  <li>
-	    <a href="javascript:void(0)" id="completed">回收站</a>
+	    <a href="javascript:void(0)" id="completed">Trash  Bin</a>
 	  </li>
 	</ul>
-	<button id="clear-completed">清除所选项 (<%= done %>)</button>
+	<button id="clear-completed">Clear Selected (<%= done %>)</button>
       </footer>
     </script>
 
