@@ -1,33 +1,33 @@
-// An example Parse.js Backbone application based on the parseNote app by
+// An example Parse.js Backbone application based on the todo app by
 // [Jérôme Gravel-Niquet](http://jgn.me/). This demo uses Parse to persist
-// the parseNote items and provide user authentication and sessions.
+// the todo items and provide user authentication and sessions.
 
 $(function() {
 
   Parse.$ = jQuery;
 
   // Initialize Parse with your Parse application javascript keys
-  Parse.initialize("l1vS0vViCTmKHBuPZ0agUL78l31vu5BoHUQAMiWO",
-                   "1hV11SctEPYiQQlHUkTAq6rFYCrowczTjs8Lq8A4");
+  Parse.initialize("Ha5cdstzkRYXK5wixTMFdJ8Y9evUTIe0oVUWfCPq",
+                   "wduFWPZmDuwoVaPLdVAVxPY9X5HNsplKSui8Acng");
 
-  // ParseNote Model
+  // Todo Model
   // ----------
-  // Our basic ParseNote model has `content`, `order`, and `done` attributes.
-  var ParseNote = Parse.Object.extend("ParseNote", {
-    // Default attributes for the parseNote.
+  // Our basic Todo model has `content`, `order`, and `done` attributes.
+  var Todo = Parse.Object.extend("Todo", {
+    // Default attributes for the todo.
     defaults: {
-      content: "empty Note...",
+      content: "empty todo...",
       done: false
     },
 
-    // Ensure that each parseNote created has `content`.
+    // Ensure that each todo created has `content`.
     initialize: function() {
       if (!this.get("content")) {
         this.set({"content": this.defaults.content});
       }
     },
 
-    // Toggle the `done` state of this parseNote item.
+    // Toggle the `done` state of this todo item.
     toggle: function() {
       this.save({done: !this.get("done")});
     }
@@ -40,43 +40,43 @@ $(function() {
     }
   });
 
-  // ParseNote Collection
+  // Todo Collection
   // ---------------
 
-  var ParseNoteList = Parse.Collection.extend({
+  var TodoList = Parse.Collection.extend({
 
     // Reference to this collection's model.
-    model: ParseNote,
+    model: Todo,
 
-    // Filter down the list of all parseNote items that are finished.
+    // Filter down the list of all todo items that are finished.
     done: function() {
-      return this.filter(function(parseNote){ return parseNote.get('done'); });
+      return this.filter(function(todo){ return todo.get('done'); });
     },
 
-    // Filter down the list to only parseNote items that are still not finished.
+    // Filter down the list to only todo items that are still not finished.
     remaining: function() {
       return this.without.apply(this, this.done());
     },
 
-    // We keep the ParseNotes in sequential order, despite being saved by unordered
+    // We keep the Todos in sequential order, despite being saved by unordered
     // GUID in the database. This generates the next order number for new items.
     nextOrder: function() {
       if (!this.length) return 1;
       return this.last().get('order') + 1;
     },
 
-    // ParseNotes are sorted by their original insertion order.
-    comparator: function(parseNote) {
-      return parseNote.get('order');
+    // Todos are sorted by their original insertion order.
+    comparator: function(todo) {
+      return todo.get('order');
     }
 
   });
 
-  // ParseNote Item View
+  // Todo Item View
   // --------------
 
-  // The DOM element for a parseNote item...
-  var ParseNoteView = Parse.View.extend({
+  // The DOM element for a todo item...
+  var TodoView = Parse.View.extend({
 
     //... is a list tag.
     tagName:  "li",
@@ -87,14 +87,14 @@ $(function() {
     // The DOM events specific to an item.
     events: {
       "click .toggle"              : "toggleDone",
-      "dblclick label.parseNote-content" : "edit",
-      "click .parseNote-destroy"   : "clear",
+      "dblclick label.todo-content" : "edit",
+      "click .todo-destroy"   : "clear",
       "keypress .edit"      : "updateOnEnter",
       "blur .edit"          : "close"
     },
 
-    // The ParseNoteView listens for changes to its model, re-rendering. Since there's
-    // a one-to-one correspondence between a ParseNote and a ParseNoteView in this
+    // The TodoView listens for changes to its model, re-rendering. Since there's
+    // a one-to-one correspondence between a Todo and a TodoView in this
     // app, we set a direct reference on the model for convenience.
     initialize: function() {
       _.bindAll(this, 'render', 'close', 'remove');
@@ -102,7 +102,7 @@ $(function() {
       this.model.bind('destroy', this.remove);
     },
 
-    // Re-render the content of the parseNote item.
+    // Re-render the content of the todo item.
     render: function() {
       $(this.el).html(this.template(this.model.toJSON()));
       this.input = this.$('.edit');
@@ -120,7 +120,7 @@ $(function() {
       this.input.focus();
     },
 
-    // Close the `"editing"` mode, saving changes to the parseNote.
+    // Close the `"editing"` mode, saving changes to the todo.
     close: function() {
       this.model.save({content: this.input.val()});
       $(this.el).removeClass("editing");
@@ -141,8 +141,8 @@ $(function() {
   // The Application
   // ---------------
 
-  // The main view that lets a user manage their parseNote items
-  var ManageParseNotesView = Parse.View.extend({
+  // The main view that lets a user manage their todo items
+  var ManageTodosView = Parse.View.extend({
 
     // Our template for the line of statistics at the bottom of the app.
     statsTemplate: _.template($('#stats-template').html()),
@@ -158,34 +158,34 @@ $(function() {
 
     el: ".content",
 
-    // At initialization we bind to the relevant events on the `ParseNotes`
+    // At initialization we bind to the relevant events on the `Todos`
     // collection, when items are added or changed. Kick things off by
-    // loading any preexisting parseNotes that might be saved to Parse.
+    // loading any preexisting todos that might be saved to Parse.
     initialize: function() {
       var self = this;
 
       _.bindAll(this, 'addOne', 'addAll', 'addSome', 'render', 'toggleAllComplete', 'logOut', 'createOnEnter');
 
-      // Main parseNote management template
-      this.$el.html(_.template($("#manage-parseNotes-template").html()));
+      // Main todo management template
+      this.$el.html(_.template($("#manage-todos-template").html()));
       
-      this.input = this.$("#new-parseNote");
+      this.input = this.$("#new-todo");
         this.contentTwo = this.$("#new-con");
       this.allCheckbox = this.$("#toggle-all")[0];
 
-      // Create our collection of ParseNotes
-      this.parseNotes = new ParseNoteList;
+      // Create our collection of Todos
+      this.todos = new TodoList;
 
-      // Setup the query for the collection to look for parseNotes from the current user
-      this.parseNotes.query = new Parse.Query(ParseNote);
-      this.parseNotes.query.equalTo("user", Parse.User.current());
+      // Setup the query for the collection to look for todos from the current user
+      this.todos.query = new Parse.Query(Todo);
+      this.todos.query.equalTo("user", Parse.User.current());
         
-      this.parseNotes.bind('add',     this.addOne);
-      this.parseNotes.bind('reset',   this.addAll);
-      this.parseNotes.bind('all',     this.render);
+      this.todos.bind('add',     this.addOne);
+      this.todos.bind('reset',   this.addAll);
+      this.todos.bind('all',     this.render);
 
-      // Fetch all the parseNote items for this user
-      this.parseNotes.fetch();
+      // Fetch all the todo items for this user
+      this.todos.fetch();
 
       state.on("change", this.filter, this);
     },
@@ -201,11 +201,11 @@ $(function() {
     // Re-rendering the App just means refreshing the statistics -- the rest
     // of the app doesn't change.
     render: function() {
-      var done = this.parseNotes.done().length;
-      var remaining = this.parseNotes.remaining().length;
+      var done = this.todos.done().length;
+      var remaining = this.todos.remaining().length;
 
-      this.$('#parseNote-stats').html(this.statsTemplate({
-        total:      this.parseNotes.length,
+      this.$('#todo-stats').html(this.statsTemplate({
+        total:      this.todos.length,
         done:       done,
         remaining:  remaining
       }));
@@ -236,42 +236,42 @@ $(function() {
       }
     },
 
-    // Resets the filters to display all parseNotes
+    // Resets the filters to display all todos
     resetFilters: function() {
       this.$("ul#filters a").removeClass("selected");
       this.$("ul#filters a#all").addClass("selected");
       this.addAll();
     },
 
-    // Add a single parseNote item to the list by creating a view for it, and
+    // Add a single todo item to the list by creating a view for it, and
     // appending its element to the `<ul>`.
-    addOne: function(parseNote) {
-      var view = new ParseNoteView({model: parseNote});
-      this.$("#parseNote-list").append(view.render().el);
+    addOne: function(todo) {
+      var view = new TodoView({model: todo});
+      this.$("#todo-list").append(view.render().el);
     },
 
-    // Add all items in the ParseNotes collection at once.
+    // Add all items in the Todos collection at once.
     addAll: function(collection, filter) {
-      this.$("#parseNote-list").html("");
-      this.parseNotes.each(this.addOne);
+      this.$("#todo-list").html("");
+      this.todos.each(this.addOne);
     },
 
-    // Only adds some parseNotes, based on a filtering function that is passed in
+    // Only adds some todos, based on a filtering function that is passed in
     addSome: function(filter) {
       var self = this;
-      this.$("#parseNote-list").html("");
-      this.parseNotes.chain().filter(filter).each(function(item) { self.addOne(item) });
+      this.$("#todo-list").html("");
+      this.todos.chain().filter(filter).each(function(item) { self.addOne(item) });
     },
 
-    // If you hit return in the main input field, create new ParseNote model
+    // If you hit return in the main input field, create new Todo model
     createOnEnter: function(e) {
 
         var self = this;
       /*if (e.keyCode != 13) return;*/
-      this.parseNotes.create({
+      this.todos.create({
         content: this.input.val(),
         title: this.contentTwo.val(),
-        order:   this.parseNotes.nextOrder(),
+        order:   this.todos.nextOrder(),
         done:    false,
         user:    Parse.User.current(),
         ACL:     new Parse.ACL(Parse.User.current())
@@ -282,15 +282,15 @@ $(function() {
       this.resetFilters();
     },
 
-    // Clear all done parseNote items, destroying their models.
+    // Clear all done todo items, destroying their models.
     clearCompleted: function() {
-      _.each(this.parseNotes.done(), function(parseNote){ parseNote.destroy(); });
+      _.each(this.todos.done(), function(todo){ todo.destroy(); });
       return false;
     },
 
     toggleAllComplete: function () {
       var done = this.allCheckbox.checked;
-      this.parseNotes.each(function (parseNote) { parseNote.save({'done': done}); });
+      this.todos.each(function (todo) { todo.save({'done': done}); });
     }
   });
 
@@ -314,7 +314,7 @@ $(function() {
       
       Parse.User.logIn(username, password, {
         success: function(user) {
-          new ManageParseNotesView();
+          new ManageTodosView();
           self.undelegateEvents();
           delete self;
         },
@@ -337,7 +337,7 @@ $(function() {
       
       Parse.User.signUp(username, password, { ACL: new Parse.ACL() }, {
         success: function(user) {
-          new ManageParseNotesView();
+          new ManageTodosView();
           self.undelegateEvents();
           delete self;
         },
@@ -363,7 +363,7 @@ $(function() {
   var AppView = Parse.View.extend({
     // Instead of generating a new element, bind to the existing skeleton of
     // the App already present in the HTML.
-    el: $("#parseNoteapp"),
+    el: $("#todoapp"),
 
     initialize: function() {
       this.render();
@@ -371,7 +371,7 @@ $(function() {
 
     render: function() {
       if (Parse.User.current()) {
-        new ManageParseNotesView();
+        new ManageTodosView();
       } else {
         new LogInView();
       }
