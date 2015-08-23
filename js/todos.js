@@ -7,8 +7,8 @@ $(function() {
   Parse.$ = jQuery;
 
   // Initialize Parse with your Parse application javascript keys
-  Parse.initialize("Qe5rFk8qdUYnTURwyqIuEIRPFXonnFGujWpASGuM",
-                   "WHhs8MnVrfNQLtXPyYQUXLJ6tMPtLg1xOX6ShJLR");
+  Parse.initialize("l1vS0vViCTmKHBuPZ0agUL78l31vu5BoHUQAMiWO",
+                   "1hV11SctEPYiQQlHUkTAq6rFYCrowczTjs8Lq8A4");
 
   // ParseNote Model
   // ----------
@@ -16,7 +16,7 @@ $(function() {
   var ParseNote = Parse.Object.extend("ParseNote", {
     // Default attributes for the parseNote.
     defaults: {
-      content: "empty parseNote...",
+      content: "empty Note...",
       done: false
     },
 
